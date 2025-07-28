@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sensor Prediction</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .background-graphic {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 60%),
+                        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.03) 0%, transparent 60%);
+            background-repeat: no-repeat;
+            animation: moveBackground 20s linear infinite;
+        }
+
+        @keyframes moveBackground {
+            0% { background-position: 20% 30%, 80% 70%; }
+            50% { background-position: 30% 40%, 70% 60%; }
+            100% { background-position: 20% 30%, 80% 70%; }
+        }
+
+        .container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .glass-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #fdd835;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-size: 16px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #ff6f00;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #ffa000;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 16px;
+            background-color: #2979ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #1565c0;
+        }
+
+        h3 {
+            margin-top: 20px;
+            color: #80d8ff;
+        }
+
+        .svg-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.04;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-graphic"></div>
+    <svg class="svg-bg" width="100%" height="100%">
+        <defs>
+            <pattern id="circuits" width="100" height="100" patternUnits="userSpaceOnUse">
+                <path d="M 0 0 L 100 100 M100 0 L0 100" stroke="#ffffff" stroke-width="0.5"/>
+            </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#circuits)"/>
+    </svg>
+
+    <div class="container">
+        <div class="glass-box">
+            <h2>Sensor-Based Prediction</h2>
+            <form action="/predict_sensor" method="POST">
+                <label>Sensor Value 1:</label>
+                <input type="text" name="sensor1"><br>
+                <label>Sensor Value 2:</label>
+                <input type="text" name="sensor2"><br>
+                <label>Sensor Value 3:</label>
+                <input type="text" name="sensor3"><br>
+                <input type="submit" value="Predict">
+            </form>
+
+            {% if prediction %}
+                <h3>Predicted Temperature: {{ prediction }}</h3>
+            {% endif %}
+
+            <a href="/" class="back-button">Back to Home</a>
+        </div>
+    </div>
+<script>
+    // Automatically focus next input on Enter key
+    document.addEventListener('DOMContentLoaded', function () {
+        const inputs = Array.from(document.querySelectorAll('input[type="text"]'));
+
+        inputs.forEach((input, index) => {
+            input.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Prevent form submission
+                    const nextInput = inputs[index + 1];
+                    if (nextInput) {
+                        nextInput.focus();
+                    } else {
+                        // If it's the last input, submit the form
+                        input.form.requestSubmit();
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

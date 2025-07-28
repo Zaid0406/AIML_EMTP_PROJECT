@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manual Prediction</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f2027;
+            background-image: 
+                linear-gradient(135deg, #0f2027, #203a43, #2c5364),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.04'%3E%3Cpath d='M30 20a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM30 0v10M30 50v10M0 30h10M50 30h10M10.6 10.6l7.1 7.1M42.3 42.3l7.1 7.1M10.6 49.4l7.1-7.1M42.3 17.7l7.1-7.1' stroke='%23ffffff' stroke-width='2'/%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: auto;
+            color: #fff;
+        }
+
+        .container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .glass-box {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 35px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            width: 320px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #fdd835;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-size: 16px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #ff6f00;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #ffa000;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 16px;
+            background-color: #2979ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #1565c0;
+        }
+
+        h3 {
+            margin-top: 20px;
+            color: #80d8ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="glass-box">
+            <h2>Manual Input Form</h2>
+            <form action="/predict_manual" method="post">
+                <label>Feature 1:</label>
+                <input type="text" name="feature1"><br>
+                <label>Feature 2:</label>
+                <input type="text" name="feature2"><br>
+                <label>Feature 3:</label>
+                <input type="text" name="feature3"><br>
+                <button type="submit">Predict</button>
+            </form>
+
+            {% if prediction %}
+                <h3>Predicted Temperature: {{ prediction }}</h3>
+            {% endif %}
+
+            <a href="/" class="back-button">Back to Home</a>
+        </div>
+    </div>
+<script>
+    // Automatically focus next input on Enter key
+    document.addEventListener('DOMContentLoaded', function () {
+        const inputs = Array.from(document.querySelectorAll('input[type="text"]'));
+
+        inputs.forEach((input, index) => {
+            input.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Prevent form submission
+                    const nextInput = inputs[index + 1];
+                    if (nextInput) {
+                        nextInput.focus();
+                    } else {
+                        // If it's the last input, submit the form
+                        input.form.requestSubmit();
+                    }
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
+
+
+

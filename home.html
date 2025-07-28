@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Temperature Prediction</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            color: white;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            z-index: 1;
+        }
+
+        h1 {
+            color: #fdd835;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        a button {
+            margin: 10px;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            background-color: #ff6f00;
+            color: white;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        a button:hover {
+            background-color: #ffa000;
+            transform: scale(1.05);
+        }
+
+        .decor-img {
+            position: absolute;
+            opacity: 0.12;
+            max-width: 200px;
+            z-index: 0;
+        }
+
+        .motor-img {
+            bottom: 30px;
+            left: 30px;
+        }
+
+        .thermo-img {
+            top: 20px;
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative images -->
+    <img src="{{ url_for('static', filename='motor.png') }}" class="decor-img motor-img" alt="Motor">
+    <img src="{{ url_for('static', filename='thermo.png') }}" class="decor-img thermo-img" alt="Thermometer">
+
+    <div class="container">
+        <h1>Welcome to Temperature Predictor</h1>
+        <p>Select a prediction method:</p>
+        <a href="/manual"><button>Manual Input Prediction</button></a>
+        <a href="/sensor"><button>Sensor Data Prediction</button></a>
+    </div>
+</body>
+</html>
+
+
+
+
